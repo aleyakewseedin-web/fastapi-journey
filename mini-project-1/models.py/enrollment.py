@@ -1,6 +1,7 @@
 from pydantic import BaseModel, Field, model_validator, model_validator
 from enum import Enum
 from typing import Optional
+
 class Semester(str, Enum):
     fall = "Fall"
     spring = "Spring"

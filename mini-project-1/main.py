@@ -1,7 +1,7 @@
 import asyncio
 from fastapi import FastAPI
 from typing import List
-from mini_project_1.models import student,enrollment
+from models import student,enrollment
 
 
 app= FastAPI()  
