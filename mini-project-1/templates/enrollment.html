@@ -1,0 +1,100 @@
+<!-- TODO: This file must be named enrollment.html and placed inside mini-project-1/templates/ -->
+
+{% extends "home.html" %}
+
+<!-- TODO: Block name must match home.html exactly — keep as enrollment_container -->
+{% block enrollment_container %}
+
+<main class="container">
+  <hr />
+
+  <!-- ─── ADD FORM ─────────────────────────────────────────────────────── -->
+  <section class="container-fluid mb-4">
+    <form method="post">
+      <div class="input-group">
+        <input
+          class="form-control"
+          type="text"
+          name="item"
+          aria-label="Add a student"
+          placeholder="Enter student full name"
+          value="{{ item }}"
+        />
+        <div class="input-group-append">
+          <button
+            class="btn btn-purple"
+            style="background-color: #6f42c1; color: white"
+            type="submit"
+          >
+            <i class="fas fa-graduation-cap mr-1"></i> Add Student
+          </button>
+        </div>
+      </div>
+    </form>
+  </section>
+
+  <!-- ─── SINGLE ITEM VIEW ─────────────────────────────────────────────
+         TODO: field names must match your Student Pydantic model exactly.
+         Expected fields: enrollment.id, enrollment.student_name, enrollment.course, enrollment.gpa
+         Add or remove <p> rows to match your actual model fields.         -->
+
+  {% if enrollment %}
+  <article class="card shadow-sm mb-4">
+    <div class="card-header text-white" style="background-color: #6f42c1">
+      <h4 class="mb-0">
+        <i class="fas fa-user-graduate mr-2"></i>Enrollment Details
+      </h4>
+    </div>
+    <div class="card-body">
+      <p><strong>ID:</strong> {{ enrollment.id }}</p>
+      <p><strong>Student Name:</strong> {{ enrollment.student_name }}</p>
+      <p><strong>Course:</strong> {{ enrollment.course }}</p>
+      <p><strong>GPA:</strong> {{ enrollment.gpa }}</p>
+
+      <!-- TODO: If your model has nested enrollments list, display count here -->
+      <p>
+        <strong>Enrolled Courses:</strong> {{ enrollment.courses | length }}
+        registered
+      </p>
+
+      <a href="/home" class="btn btn-outline-secondary btn-sm mt-2">
+        <i class="fas fa-arrow-left mr-1"></i> Back to list
+      </a>
+    </div>
+  </article>
+
+  {% else %}
+
+  <!-- ─── LIST VIEW ────────────────────────────────────────────────────
+         TODO: Loop variable is "enrollment", list variable is "enrollments"
+               Link href must be /enrollment/{{ enrollment.id }}           -->
+  <section class="container-fluid">
+    <h2 class="text-center mb-3">
+      <i class="fas fa-list mr-2"></i>All Enrollments
+    </h2>
+    <div class="card shadow-sm">
+      <ul class="list-group list-group-flush">
+        {% for enrollment in enrollments %}
+        <li
+          class="list-group-item d-flex justify-content-between align-items-center"
+        >
+          <span>
+            <span
+              class="badge badge-pill mr-2"
+              style="background-color: #6f42c1; color: white"
+              >{{ loop.index }}</span
+            >
+            <a href="/enrollment/{{ enrollment.id }}"
+              >{{ enrollment.student_name }}</a
+            >
+          </span>
+          <span class="text-muted small">{{ enrollment.course }}</span>
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+    {% endif %}
+  </section>
+</main>
+
+{% endblock %}
